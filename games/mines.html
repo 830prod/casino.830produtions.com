@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>casino.830 | Mines</title>
+    <link rel="icon" type="image/png" href="../assets/logos/logo-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body data-page-type="game" data-game-id="mines" data-game-creator="createMinesGame">
+    <div class="app-shell">
+      <header class="topbar glass-panel">
+        <div class="brand-cluster">
+          <a class="brand-lockup" href="../index.html" aria-label="casino.830 home">
+            <img class="brand-mark" src="../assets/logos/logo-white.png" alt="830 Productions logo" />
+            <div>
+              <p class="eyebrow">830 Productions</p>
+              <h1>casino.830</h1>
+            </div>
+          </a>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="secondary-button" href="../index.html">Lobby</a>
+          <button class="icon-button sound-toggle" data-sound-toggle type="button" aria-pressed="true">
+            Sound: On
+          </button>
+          <div class="balance-pill">
+            <span>Balance</span>
+            <strong data-balance-display>$30,000</strong>
+          </div>
+          <button class="secondary-button" data-reset-balance type="button">Reset</button>
+        </div>
+      </header>
+
+      <main class="main-content page-main">
+        <section class="hero-panel glass-panel">
+          <div class="hero-copy">
+            <span class="hero-chip">Mines</span>
+            <h2>Find the white marks.</h2>
+            <p>Avoid the dark ones and cash out early.</p>
+          </div>
+
+          <div class="hero-stats">
+            <article class="hero-stat">
+              <span>Balance</span>
+              <strong data-balance-display>$30,000</strong>
+              <small>Shared across all games.</small>
+            </article>
+            <article class="hero-stat">
+              <span>Grid</span>
+              <strong>5 x 5</strong>
+              <small>Cash out anytime.</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="lobby-section">
+          <div class="game-stage-shell glass-panel">
+            <div id="gameMount"></div>
+          </div>
+        </section>
+
+        <footer class="site-footer">
+          <p>This is a free-to-play simulation. No real money gambling.</p>
+        </footer>
+      </main>
+    </div>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+    <script defer src="../js/site.js"></script>
+    <script defer src="../js/games/mines.js"></script>
+    <script defer src="../js/game-page.js"></script>
+  </body>
+</html>

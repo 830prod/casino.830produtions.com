@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="casino.830 is a free-to-play casino simulation by 830 Productions. No real money, no account, no backend."
+    />
+    <title>casino.830 | Free-to-Play Casino Demo</title>
+    <link rel="icon" type="image/png" href="assets/logos/logo-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" data-app="casino830-home">
+      <header class="topbar glass-panel">
+        <div class="brand-cluster">
+          <a class="brand-lockup" href="index.html" aria-label="casino.830 home">
+            <img
+              class="brand-mark"
+              src="assets/logos/logo-white.png"
+              alt="830 Productions logo"
+            />
+            <div>
+              <p class="eyebrow">830 Productions</p>
+              <h1>casino.830</h1>
+            </div>
+          </a>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="demo-badge">Demo Mode</span>
+          <button
+            class="icon-button sound-toggle"
+            data-sound-toggle
+            type="button"
+            aria-pressed="true"
+          >
+            Sound: On
+          </button>
+          <div class="balance-pill">
+            <span>Balance</span>
+            <strong data-balance-display>$30,000</strong>
+          </div>
+          <button class="secondary-button" data-reset-balance type="button">
+            Reset
+          </button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="sidebar glass-panel" id="game-directory">
+          <div class="sidebar-section">
+            <p class="sidebar-heading">Browse</p>
+            <div class="sidebar-links">
+              <a class="sidebar-link active" href="#slots-section">
+                <span>Slots</span>
+                <strong>01</strong>
+              </a>
+              <a class="sidebar-link" href="#table-section">
+                <span>Table Games</span>
+                <strong>02</strong>
+              </a>
+              <a class="sidebar-link" href="#originals-section">
+                <span>Originals</span>
+                <strong>03</strong>
+              </a>
+            </div>
+          </div>
+
+          <div class="sidebar-section sidebar-promo">
+            <span class="mini-badge">Always Free</span>
+            <p>One balance. Five games.</p>
+          </div>
+
+          <div class="sidebar-section sidebar-note">
+            <p class="disclaimer-text">
+              This is a free-to-play simulation. No real money gambling.
+            </p>
+          </div>
+        </aside>
+
+        <main class="main-content">
+          <section class="hero-panel glass-panel">
+            <div class="hero-copy">
+              <span class="hero-chip">Free Play</span>
+              <h2>Pick a game.</h2>
+              <p>One balance. Five free games.</p>
+              <div class="hero-actions">
+                <a class="primary-button" data-continue-link href="games/slots.html">
+                  Continue
+                </a>
+                <a class="secondary-button" href="#slots-section">Browse</a>
+              </div>
+            </div>
+
+            <div class="hero-stats">
+              <article class="hero-stat">
+                <span>Starting Balance</span>
+                <strong>$30,000</strong>
+                <small>Reset anytime.</small>
+              </article>
+              <article class="hero-stat">
+                <span>Balance</span>
+                <strong data-balance-display>$30,000</strong>
+                <small>Shared across all games.</small>
+              </article>
+              <article class="hero-stat">
+                <span>Last Played</span>
+                <strong data-last-played-name>Any game</strong>
+                <small data-last-played-hint>Play to save it.</small>
+              </article>
+            </div>
+          </section>
+
+          <section class="lobby-section" id="slots-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Slots</p>
+                <h2>Slots</h2>
+              </div>
+              <div class="section-tags">
+                <span class="tag-chip">1 ready</span>
+                <span class="tag-chip" data-last-played-chip>No recent game</span>
+              </div>
+            </div>
+
+            <div class="game-grid">
+              <article class="game-card" data-game="slots">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Slots</span>
+                  <div class="thumbnail-symbol">777</div>
+                  <div class="thumbnail-subline">Rapid Reels</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Slots</h3>
+                    <p>3 reels. Quick spins.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">3 reels</span>
+                    <a class="play-button" href="games/slots.html">Open</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="lobby-section" id="table-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Table Games</p>
+                <h2>Table Games</h2>
+              </div>
+              <div class="section-tags">
+                <span class="tag-chip">2 ready</span>
+              </div>
+            </div>
+
+            <div class="game-grid">
+              <article class="game-card" data-game="blackjack">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Table Games</span>
+                  <div class="thumbnail-symbol">A K</div>
+                  <div class="thumbnail-subline">Dealer Duel</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Blackjack</h3>
+                    <p>Player vs dealer.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Classic</span>
+                    <a class="play-button" href="games/blackjack.html">Open</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="game-card" data-game="roulette">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Table Games</span>
+                  <div class="thumbnail-symbol">0 17 32</div>
+                  <div class="thumbnail-subline">Wheel Spin</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Roulette</h3>
+                    <p>Color or number bets.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Wheel</span>
+                    <a class="play-button" href="games/roulette.html">Open</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="lobby-section" id="originals-section">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Originals</p>
+                <h2>Originals</h2>
+              </div>
+              <div class="section-tags">
+                <span class="tag-chip">5 ready</span>
+              </div>
+            </div>
+
+            <div class="game-grid">
+              <article class="game-card" data-game="mines" data-recommended="true">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Originals</span>
+                  <div class="thumbnail-symbol">5x5</div>
+                  <div class="thumbnail-subline">Logo Hunt</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <div class="game-title-row">
+                      <h3>Mines</h3>
+                      <span class="recommend-badge"><span aria-hidden="true">&#9733;</span> Pick</span>
+                    </div>
+                    <p>Find gems. Avoid mines.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Grid</span>
+                    <a class="play-button" href="games/mines.html">Open</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="game-card" data-game="plinko">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Originals</span>
+                  <div class="thumbnail-symbol">x9.00</div>
+                  <div class="thumbnail-subline">Logo Drop</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Plinko</h3>
+                    <p>Drop the logo through the board.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Drop</span>
+                    <a class="play-button" href="games/plinko.html">Open</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="game-card" data-game="limbo">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Originals</span>
+                  <div class="thumbnail-symbol">x8.40</div>
+                  <div class="thumbnail-subline">Target Roll</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Limbo</h3>
+                    <p>Pick a target. Beat the roll.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Target</span>
+                    <a class="play-button" href="games/limbo.html">Open</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="game-card" data-game="dice">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Originals</span>
+                  <div class="thumbnail-symbol">52.41</div>
+                  <div class="thumbnail-subline">Risk Slider</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Dice</h3>
+                    <p>Adjust risk and roll.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Risk</span>
+                    <a class="play-button" href="games/dice.html">Open</a>
+                  </div>
+                </div>
+              </article>
+
+              <article class="game-card" data-game="crash">
+                <div class="game-card-media">
+                  <span class="mini-badge card-category">Originals</span>
+                  <div class="thumbnail-symbol">x4.28</div>
+                  <div class="thumbnail-subline">Cash Out</div>
+                </div>
+                <div class="game-card-content">
+                  <div>
+                    <h3>Crash</h3>
+                    <p>Cash out before the break.</p>
+                  </div>
+                  <div class="game-card-footer">
+                    <span class="pill-chip">Crash</span>
+                    <a class="play-button" href="games/crash.html">Open</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <footer class="site-footer">
+            <p>This is a free-to-play simulation. No real money gambling.</p>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+    <script defer src="js/site.js"></script>
+  </body>
+</html>
