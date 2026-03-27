@@ -1,9 +1,14 @@
 (function () {
   var DEFAULT_BALANCE = 30000;
+  var RESET_INTERVAL_MS = 20 * 24 * 60 * 60 * 1000;
+  var LUT_REWARD_THRESHOLD = 100000;
+  var LOW_BALANCE_RESET_THRESHOLD = 1000;
   var STORAGE_KEYS = {
     balance: "casino830_balance",
     lastGame: "casino830_last_game",
     sound: "casino830_sound_enabled",
+    cycleStart: "casino830_cycle_start",
+    claimedLut: "casino830_claimed_lut",
   };
   var GAME_META = {
     slots: { name: "Slots", path: "games/slots.html" },
@@ -15,10 +20,39 @@
     dice: { name: "Dice", path: "games/dice.html" },
     crash: { name: "Crash", path: "games/crash.html" },
   };
+  var LUT_REWARDS = [
+    {
+      id: "black",
+      name: "Black",
+      path: "Prize Luts/Video/Black.cube",
+      filename: "830-Black.cube",
+    },
+    {
+      id: "cinematic-log-01",
+      name: "Cinematic LOG 01",
+      path: "Prize Luts/Video/Cinematic - LOG 01.cube",
+      filename: "830-Cinematic-LOG-01.cube",
+    },
+    {
+      id: "cinematic-log-33",
+      name: "Cinematic LOG 33",
+      path: "Prize Luts/Video/Cinematic - LOG 33.cube",
+      filename: "830-Cinematic-LOG-33.cube",
+    },
+    {
+      id: "cinematic-gold",
+      name: "Cinematic Gold",
+      path: "Prize Luts/Video/Cinematic Gold.cube",
+      filename: "830-Cinematic-Gold.cube",
+    },
+  ];
 
+  var lifecycleState = ensureCycleState();
   var displayedBalance = readNumber(STORAGE_KEYS.balance, DEFAULT_BALANCE);
   var balanceFrame = 0;
   var audioContext = null;
+  var cycleInterval = 0;
+  var lifecycleNoticeQueued = lifecycleState.didReset;
 
   function formatCurrency(amount) {
     var rounded = Math.round(Number(amount) || 0);
@@ -107,6 +141,119 @@
     return isGamePage ? "../" + path : path;
   }
 
+  function getRelativeAssetPath(path) {
+    var isGamePage = document.body && document.body.getAttribute("data-page-type") === "game";
+    return isGamePage ? "../" + path : path;
+  }
+
+  function ensureCycleState() {
+    var now = Date.now();
+    var cycleStart = readNumber(STORAGE_KEYS.cycleStart, 0);
+    var didReset = false;
+
+    if (!cycleStart || cycleStart > now) {
+      writeStorage(STORAGE_KEYS.cycleStart, String(now));
+      return { didReset: false };
+    }
+
+    if (now - cycleStart >= RESET_INTERVAL_MS) {
+      writeStorage(STORAGE_KEYS.cycleStart, String(now));
+      writeStorage(STORAGE_KEYS.balance, String(DEFAULT_BALANCE));
+      writeStorage(STORAGE_KEYS.claimedLut, "");
+      didReset = true;
+    }
+
+    return { didReset: didReset };
+  }
+
+  function getCycleStart() {
+    var stored = readNumber(STORAGE_KEYS.cycleStart, 0);
+
+    if (stored) {
+      return stored;
+    }
+
+    var now = Date.now();
+    writeStorage(STORAGE_KEYS.cycleStart, String(now));
+    return now;
+  }
+
+  function getCycleResetAt() {
+    return getCycleStart() + RESET_INTERVAL_MS;
+  }
+
+  function getCycleRemainingMs() {
+    return Math.max(0, getCycleResetAt() - Date.now());
+  }
+
+  function formatRemainingShort(ms) {
+    var dayMs = 24 * 60 * 60 * 1000;
+    var hourMs = 60 * 60 * 1000;
+    var minuteMs = 60 * 1000;
+    var days = Math.floor(ms / dayMs);
+    var hours = Math.floor((ms % dayMs) / hourMs);
+    var minutes = Math.floor((ms % hourMs) / minuteMs);
+
+    if (days >= 1) {
+      return days + "d " + hours + "h";
+    }
+
+    if (hours >= 1) {
+      return hours + "h " + minutes + "m";
+    }
+
+    return Math.max(1, minutes) + "m";
+  }
+
+  function formatRemainingLong(ms) {
+    var dayMs = 24 * 60 * 60 * 1000;
+    var hourMs = 60 * 60 * 1000;
+    var minuteMs = 60 * 1000;
+    var days = Math.floor(ms / dayMs);
+    var hours = Math.floor((ms % dayMs) / hourMs);
+    var minutes = Math.floor((ms % hourMs) / minuteMs);
+    var parts = [];
+
+    if (days) {
+      parts.push(days + " " + (days === 1 ? "day" : "days"));
+    }
+
+    if (hours) {
+      parts.push(hours + " " + (hours === 1 ? "hour" : "hours"));
+    }
+
+    if (!parts.length) {
+      parts.push(Math.max(1, minutes) + " " + (Math.max(1, minutes) === 1 ? "minute" : "minutes"));
+    }
+
+    return parts.join(" ");
+  }
+
+  function getClaimedLutId() {
+    var claimed = readStorage(STORAGE_KEYS.claimedLut, "");
+    return findLutReward(claimed) ? claimed : "";
+  }
+
+  function findLutReward(rewardId) {
+    var index;
+
+    for (index = 0; index < LUT_REWARDS.length; index += 1) {
+      if (LUT_REWARDS[index].id === rewardId) {
+        return LUT_REWARDS[index];
+      }
+    }
+
+    return null;
+  }
+
+  function isLutUnlocked() {
+    return getBalance() >= LUT_REWARD_THRESHOLD;
+  }
+
+  function canLowBalanceReset() {
+    return getBalance() < LOW_BALANCE_RESET_THRESHOLD;
+  }
+
   function emitBalanceChange(balance) {
     if (typeof document === "undefined") {
       return;
@@ -173,10 +320,23 @@
   }
 
   function setBalance(nextBalance, instant) {
+    var previousBalance = getBalance();
     var balance = Math.max(0, Math.round(Number(nextBalance) || 0));
     writeStorage(STORAGE_KEYS.balance, String(balance));
     syncBalanceDisplays(Boolean(instant));
+    syncCycleDisplays();
+    syncLowBalanceResetButtons();
+    renderRewardPanels();
     emitBalanceChange(balance);
+
+    if (
+      typeof document !== "undefined" &&
+      previousBalance < LUT_REWARD_THRESHOLD &&
+      balance >= LUT_REWARD_THRESHOLD &&
+      !getClaimedLutId()
+    ) {
+      showToast("LUT reward unlocked. Choose one to download.", "success");
+    }
   }
 
   function saveLastGame(gameId) {
@@ -231,8 +391,36 @@
     }
   }
 
-  function bindResetButtons() {
-    var buttons = document.querySelectorAll("[data-reset-balance]");
+  function syncCycleDisplays() {
+    var shortDisplays = document.querySelectorAll("[data-cycle-display]");
+    var longDisplays = document.querySelectorAll("[data-cycle-display-long]");
+    var shortText = formatRemainingShort(getCycleRemainingMs());
+    var longText = formatRemainingLong(getCycleRemainingMs());
+    var index;
+
+    for (index = 0; index < shortDisplays.length; index += 1) {
+      shortDisplays[index].textContent = shortText;
+    }
+
+    for (index = 0; index < longDisplays.length; index += 1) {
+      longDisplays[index].textContent = longText;
+    }
+  }
+
+  function syncLowBalanceResetButtons() {
+    var buttons = document.querySelectorAll("[data-low-balance-reset]");
+    var enabled = canLowBalanceReset();
+    var index;
+
+    for (index = 0; index < buttons.length; index += 1) {
+      buttons[index].disabled = !enabled;
+      buttons[index].textContent = enabled ? "Reset Now" : "Reset <1k";
+      buttons[index].setAttribute("aria-disabled", enabled ? "false" : "true");
+    }
+  }
+
+  function bindLowBalanceResetButtons() {
+    var buttons = document.querySelectorAll("[data-low-balance-reset]");
     var index;
 
     for (index = 0; index < buttons.length; index += 1) {
@@ -242,7 +430,14 @@
 
       buttons[index].setAttribute("data-bound", "true");
       buttons[index].addEventListener("click", function () {
-        var confirmed = window.confirm("Reset the demo balance back to $30,000?");
+        var confirmed;
+
+        if (!canLowBalanceReset()) {
+          showToast("Reset unlocks below " + formatCurrency(LOW_BALANCE_RESET_THRESHOLD) + ".", "info");
+          return;
+        }
+
+        confirmed = window.confirm("Balance is below $1,000. Reset back to $30,000?");
         if (!confirmed) {
           return;
         }
@@ -285,6 +480,134 @@
     stack.setAttribute("aria-atomic", "true");
     document.body.appendChild(stack);
     return stack;
+  }
+
+  function bindRewardPanels() {
+    var panels = document.querySelectorAll("[data-lut-rewards]");
+    var index;
+
+    for (index = 0; index < panels.length; index += 1) {
+      if (panels[index].getAttribute("data-bound") === "true") {
+        continue;
+      }
+
+      panels[index].setAttribute("data-bound", "true");
+      panels[index].addEventListener("click", function (event) {
+        var button = event.target.closest("[data-lut-id]");
+        if (!button) {
+          return;
+        }
+
+        claimLutReward(button.getAttribute("data-lut-id"));
+      });
+    }
+  }
+
+  function renderRewardPanels() {
+    var panels = document.querySelectorAll("[data-lut-rewards]");
+    var balance = getBalance();
+    var progress = Math.min(100, (balance / LUT_REWARD_THRESHOLD) * 100);
+    var unlocked = isLutUnlocked();
+    var claimedId = getClaimedLutId();
+    var claimedReward = findLutReward(claimedId);
+    var headingStatus = claimedReward
+      ? "Claimed"
+      : unlocked
+        ? "Unlocked"
+        : formatCurrency(balance) + " / " + formatCurrency(LUT_REWARD_THRESHOLD);
+    var summary = claimedReward
+      ? "Claimed this cycle: " + claimedReward.name + "."
+      : unlocked
+        ? "Choose one LUT for a direct download."
+        : "Reach " + formatCurrency(LUT_REWARD_THRESHOLD) + " credits to unlock one LUT.";
+    var cycleNote = "Cycle resets in " + formatRemainingLong(getCycleRemainingMs()) + ".";
+    var index;
+
+    for (index = 0; index < panels.length; index += 1) {
+      panels[index].innerHTML = `
+        <div class="reward-head">
+          <div>
+            <p class="eyebrow">LUT Rewards</p>
+            <h2>Claim 1 LUT at ${formatCurrency(LUT_REWARD_THRESHOLD)}.</h2>
+          </div>
+          <span class="tag-chip">${headingStatus}</span>
+        </div>
+        <p class="reward-copy">${summary}</p>
+        <div class="reward-progress" aria-hidden="true">
+          <span style="width:${progress.toFixed(2)}%"></span>
+        </div>
+        <div class="reward-meta">
+          <article class="selection-card">
+            <span>Balance</span>
+            <strong>${formatCurrency(balance)}</strong>
+            <small>${cycleNote}</small>
+          </article>
+          <article class="selection-card">
+            <span>Reward</span>
+            <strong>${claimedReward ? claimedReward.name : unlocked ? "Ready" : "Locked"}</strong>
+            <small>${claimedReward ? "One claim per cycle." : "Direct .cube download."}</small>
+          </article>
+        </div>
+        <div class="reward-grid">
+          ${LUT_REWARDS.map(function (reward) {
+            var claimedClass = claimedId === reward.id ? " is-claimed" : "";
+            var lockedClass = !unlocked || (claimedId && claimedId !== reward.id) ? " is-locked" : "";
+            var label = claimedId === reward.id ? "Claimed" : reward.name;
+
+            return `
+              <button
+                class="reward-download${claimedClass}${lockedClass}"
+                type="button"
+                data-lut-id="${reward.id}"
+              >
+                ${label}
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+  }
+
+  function triggerLutDownload(reward) {
+    var link = document.createElement("a");
+
+    link.href = encodeURI(getRelativeAssetPath(reward.path));
+    link.download = reward.filename;
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function claimLutReward(rewardId) {
+    var reward = findLutReward(rewardId);
+    var claimedId = getClaimedLutId();
+
+    if (!reward) {
+      return;
+    }
+
+    if (claimedId) {
+      if (claimedId === rewardId) {
+        showToast(reward.name + " already claimed this cycle.", "info");
+        return;
+      }
+
+      showToast("Only one LUT can be claimed each 20-day cycle.", "info");
+      return;
+    }
+
+    if (!isLutUnlocked()) {
+      showToast("Reach " + formatCurrency(LUT_REWARD_THRESHOLD) + " credits to unlock a LUT.", "info");
+      return;
+    }
+
+    writeStorage(STORAGE_KEYS.claimedLut, rewardId);
+    renderRewardPanels();
+    triggerLutDownload(reward);
+    playSound("win");
+    showToast(reward.name + " downloaded.", "success");
   }
 
   function showToast(message, variant) {
@@ -387,12 +710,48 @@
     return safe;
   }
 
+  function startCycleTicker() {
+    if (cycleInterval || typeof window.setInterval !== "function") {
+      return;
+    }
+
+    cycleInterval = window.setInterval(function () {
+      var nextState = ensureCycleState();
+
+      if (nextState.didReset) {
+        syncBalanceDisplays(true);
+        syncCycleDisplays();
+        renderRewardPanels();
+        showToast("Balance refreshed for a new 20-day cycle.", "info");
+        return;
+      }
+
+      syncCycleDisplays();
+    }, 60000);
+  }
+
   function bindCommon() {
+    var nextLifecycleState = ensureCycleState();
+
+    if (nextLifecycleState.didReset) {
+      lifecycleNoticeQueued = true;
+    }
+
     syncBalanceDisplays(true);
     syncLastPlayedUi();
     syncSoundButtons();
-    bindResetButtons();
+    syncCycleDisplays();
+    syncLowBalanceResetButtons();
+    renderRewardPanels();
     bindSoundButtons();
+    bindLowBalanceResetButtons();
+    bindRewardPanels();
+    startCycleTicker();
+
+    if (lifecycleNoticeQueued) {
+      lifecycleNoticeQueued = false;
+      showToast("Balance refreshed for a new 20-day cycle.", "info");
+    }
   }
 
   function createGameApi(gameId) {
@@ -417,6 +776,9 @@
         }
         return "Game";
       },
+      getRewardThreshold: function () {
+        return LUT_REWARD_THRESHOLD;
+      },
       normalizeBet: normalizeBet,
       playSound: playSound,
       refund: refund,
@@ -426,9 +788,13 @@
   }
 
   window.addEventListener("storage", function () {
+    ensureCycleState();
     syncBalanceDisplays(true);
     syncLastPlayedUi();
     syncSoundButtons();
+    syncCycleDisplays();
+    syncLowBalanceResetButtons();
+    renderRewardPanels();
   });
 
   if (document.readyState === "loading") {
@@ -446,6 +812,9 @@
     getBalance: getBalance,
     getGameName: getGameName,
     getGamePath: getGamePath,
+    getRewardThreshold: function () {
+      return LUT_REWARD_THRESHOLD;
+    },
     normalizeBet: normalizeBet,
     playSound: playSound,
     refund: refund,

@@ -28,7 +28,7 @@ const GAME_DEFINITIONS = [
     thumbnail: "777",
     subline: "Rapid Reels",
     tag: "3 reels",
-    description: "Three-reel demo play with clean multipliers and quick spin pacing.",
+    description: "Three-reel play with clean multipliers and quick spin pacing.",
     create: createSlotsGame,
   },
   {
@@ -190,7 +190,7 @@ function bindEvents() {
   });
 
   ui.resetBalanceBtn.addEventListener("click", () => {
-    const confirmed = window.confirm("Reset the demo balance back to $30,000?");
+    const confirmed = window.confirm("Reset the balance back to $30,000?");
     if (!confirmed) {
       return;
     }
@@ -539,7 +539,7 @@ function writeStorage(key, value) {
   try {
     localStorage.setItem(key, value);
   } catch {
-    // Ignore storage errors so the demo still works in restrictive contexts.
+    // Ignore storage errors so the site still works in restrictive contexts.
   }
 }
 

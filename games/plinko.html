@@ -35,7 +35,13 @@
             <span>Balance</span>
             <strong data-balance-display>$30,000</strong>
           </div>
-          <button class="secondary-button" data-reset-balance type="button">Reset</button>
+          <div class="cycle-pill">
+            <span>Cycle Reset</span>
+            <strong data-cycle-display>20d</strong>
+          </div>
+          <button class="secondary-button" data-low-balance-reset type="button" disabled>
+            Reset &lt;1k
+          </button>
         </div>
       </header>
 
@@ -61,6 +67,10 @@
           </div>
         </section>
 
+        <section class="reward-section">
+          <div class="reward-panel glass-panel" data-lut-rewards></div>
+        </section>
+
         <section class="lobby-section">
           <div class="game-stage-shell glass-panel">
             <div id="gameMount"></div>
@@ -68,7 +78,7 @@
         </section>
 
         <footer class="site-footer">
-          <p>This is a free-to-play simulation. No real money gambling.</p>
+          <p>830 Productions</p>
         </footer>
       </main>
     </div>

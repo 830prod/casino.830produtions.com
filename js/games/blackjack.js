@@ -92,7 +92,7 @@ function createBlackjackGame({ app }) {
           <div class="status-card">
             <span>Wallet</span>
             <strong id="blackjackWallet">${app.formatCurrency(app.getBalance())}</strong>
-            <small>Shared demo balance.</small>
+            <small>Shared balance.</small>
           </div>
         </aside>
       </div>

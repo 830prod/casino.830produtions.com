@@ -1,0 +1,183 @@
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 7.0-c000 1.000000, 0000/00/00-00:00:00        ">
+ <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about=""
+    xmlns:crs="http://ns.adobe.com/camera-raw-settings/1.0/"
+   crs:PresetType="Normal"
+   crs:Cluster=""
+   crs:UUID="7B1D291B09DC498BA91ADA73C73BFA7C"
+   crs:SupportsAmount2="True"
+   crs:SupportsAmount="True"
+   crs:SupportsColor="True"
+   crs:SupportsMonochrome="True"
+   crs:SupportsHighDynamicRange="True"
+   crs:SupportsNormalDynamicRange="True"
+   crs:SupportsSceneReferred="True"
+   crs:SupportsOutputReferred="True"
+   crs:RequiresRGBTables="False"
+   crs:CameraModelRestriction=""
+   crs:Copyright=""
+   crs:ContactInfo=""
+   crs:Version="14.5"
+   crs:ProcessVersion="11.0"
+   crs:WhiteBalance="Custom"
+   crs:IncrementalTemperature="+8"
+   crs:IncrementalTint="-3"
+   crs:Exposure2012="0.00"
+   crs:Contrast2012="-8"
+   crs:Highlights2012="-86"
+   crs:Shadows2012="+40"
+   crs:Whites2012="-10"
+   crs:Blacks2012="+20"
+   crs:Texture="0"
+   crs:Clarity2012="+6"
+   crs:Dehaze="+12"
+   crs:Vibrance="0"
+   crs:Saturation="-33"
+   crs:ParametricShadows="-5"
+   crs:ParametricDarks="-5"
+   crs:ParametricLights="+4"
+   crs:ParametricHighlights="-6"
+   crs:ParametricShadowSplit="25"
+   crs:ParametricMidtoneSplit="50"
+   crs:ParametricHighlightSplit="75"
+   crs:Sharpness="25"
+   crs:SharpenRadius="+1.0"
+   crs:SharpenDetail="25"
+   crs:SharpenEdgeMasking="0"
+   crs:LuminanceSmoothing="10"
+   crs:LuminanceNoiseReductionDetail="50"
+   crs:LuminanceNoiseReductionContrast="0"
+   crs:ColorNoiseReduction="27"
+   crs:ColorNoiseReductionDetail="50"
+   crs:ColorNoiseReductionSmoothness="50"
+   crs:HueAdjustmentRed="+35"
+   crs:HueAdjustmentOrange="0"
+   crs:HueAdjustmentYellow="-40"
+   crs:HueAdjustmentGreen="-25"
+   crs:HueAdjustmentAqua="+10"
+   crs:HueAdjustmentBlue="0"
+   crs:HueAdjustmentPurple="0"
+   crs:HueAdjustmentMagenta="0"
+   crs:SaturationAdjustmentRed="-25"
+   crs:SaturationAdjustmentOrange="-10"
+   crs:SaturationAdjustmentYellow="-45"
+   crs:SaturationAdjustmentGreen="-70"
+   crs:SaturationAdjustmentAqua="-50"
+   crs:SaturationAdjustmentBlue="-45"
+   crs:SaturationAdjustmentPurple="-21"
+   crs:SaturationAdjustmentMagenta="-15"
+   crs:LuminanceAdjustmentRed="-10"
+   crs:LuminanceAdjustmentOrange="-2"
+   crs:LuminanceAdjustmentYellow="0"
+   crs:LuminanceAdjustmentGreen="-40"
+   crs:LuminanceAdjustmentAqua="-24"
+   crs:LuminanceAdjustmentBlue="-24"
+   crs:LuminanceAdjustmentPurple="-17"
+   crs:LuminanceAdjustmentMagenta="-11"
+   crs:SplitToningShadowHue="216"
+   crs:SplitToningShadowSaturation="5"
+   crs:SplitToningHighlightHue="74"
+   crs:SplitToningHighlightSaturation="25"
+   crs:SplitToningBalance="-100"
+   crs:ColorGradeMidtoneHue="0"
+   crs:ColorGradeMidtoneSat="0"
+   crs:ColorGradeShadowLum="0"
+   crs:ColorGradeMidtoneLum="0"
+   crs:ColorGradeHighlightLum="0"
+   crs:ColorGradeBlending="100"
+   crs:ColorGradeGlobalHue="0"
+   crs:ColorGradeGlobalSat="0"
+   crs:ColorGradeGlobalLum="0"
+   crs:AutoLateralCA="0"
+   crs:LensManualDistortionAmount="0"
+   crs:VignetteAmount="0"
+   crs:DefringePurpleAmount="0"
+   crs:DefringePurpleHueLo="30"
+   crs:DefringePurpleHueHi="70"
+   crs:DefringeGreenAmount="0"
+   crs:DefringeGreenHueLo="40"
+   crs:DefringeGreenHueHi="60"
+   crs:GrainAmount="0"
+   crs:PostCropVignetteAmount="0"
+   crs:ShadowTint="-2"
+   crs:RedHue="+37"
+   crs:RedSaturation="+20"
+   crs:GreenHue="+12"
+   crs:GreenSaturation="-38"
+   crs:BlueHue="-12"
+   crs:BlueSaturation="-20"
+   crs:ConvertToGrayscale="False"
+   crs:OverrideLookVignette="False"
+   crs:ToneCurveName2012="Custom"
+   crs:CameraProfile="Embedded"
+   crs:HasSettings="True"
+   crs:CropConstrainToWarp="0">
+   <crs:Name>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default">Dark Aesthetic 01</rdf:li>
+    </rdf:Alt>
+   </crs:Name>
+   <crs:ShortName>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default"/>
+    </rdf:Alt>
+   </crs:ShortName>
+   <crs:SortName>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default"/>
+    </rdf:Alt>
+   </crs:SortName>
+   <crs:Group>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default">49 - Dark Aesthetic</rdf:li>
+    </rdf:Alt>
+   </crs:Group>
+   <crs:Description>
+    <rdf:Alt>
+     <rdf:li xml:lang="x-default"/>
+    </rdf:Alt>
+   </crs:Description>
+   <crs:ToneCurvePV2012>
+    <rdf:Seq>
+     <rdf:li>0, 8</rdf:li>
+     <rdf:li>51, 57</rdf:li>
+     <rdf:li>90, 93</rdf:li>
+     <rdf:li>127, 125</rdf:li>
+     <rdf:li>167, 155</rdf:li>
+     <rdf:li>214, 188</rdf:li>
+     <rdf:li>255, 215</rdf:li>
+    </rdf:Seq>
+   </crs:ToneCurvePV2012>
+   <crs:ToneCurvePV2012Red>
+    <rdf:Seq>
+     <rdf:li>0, 0</rdf:li>
+     <rdf:li>42, 16</rdf:li>
+     <rdf:li>82, 56</rdf:li>
+     <rdf:li>123, 123</rdf:li>
+     <rdf:li>186, 194</rdf:li>
+     <rdf:li>255, 255</rdf:li>
+    </rdf:Seq>
+   </crs:ToneCurvePV2012Red>
+   <crs:ToneCurvePV2012Green>
+    <rdf:Seq>
+     <rdf:li>0, 0</rdf:li>
+     <rdf:li>35, 14</rdf:li>
+     <rdf:li>84, 63</rdf:li>
+     <rdf:li>123, 124</rdf:li>
+     <rdf:li>207, 212</rdf:li>
+     <rdf:li>255, 255</rdf:li>
+    </rdf:Seq>
+   </crs:ToneCurvePV2012Green>
+   <crs:ToneCurvePV2012Blue>
+    <rdf:Seq>
+     <rdf:li>0, 0</rdf:li>
+     <rdf:li>40, 15</rdf:li>
+     <rdf:li>87, 65</rdf:li>
+     <rdf:li>124, 122</rdf:li>
+     <rdf:li>187, 200</rdf:li>
+     <rdf:li>255, 255</rdf:li>
+    </rdf:Seq>
+   </crs:ToneCurvePV2012Blue>
+  </rdf:Description>
+ </rdf:RDF>
+</x:xmpmeta>

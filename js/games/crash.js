@@ -77,7 +77,7 @@ function createCrashGame({ app }) {
           <div class="status-card">
             <span>Wallet</span>
             <strong id="crashWallet">${app.formatCurrency(app.getBalance())}</strong>
-            <small>Shared demo balance.</small>
+            <small>Shared balance.</small>
           </div>
         </aside>
       </div>

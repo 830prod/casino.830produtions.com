@@ -24,7 +24,7 @@ function createSlotsGame({ app }) {
               <h3>Slots</h3>
               <p>Three reels. Quick outcomes.</p>
             </div>
-            <span class="pill-chip">Client-side demo</span>
+            <span class="pill-chip">Rapid reels</span>
           </div>
 
           <div class="slots-stage">

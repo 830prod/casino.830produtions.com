@@ -95,7 +95,7 @@ function createPlinkoGame({ app }) {
           <div class="status-card">
             <span>Wallet</span>
             <strong id="plinkoWallet">${app.formatCurrency(app.getBalance())}</strong>
-            <small>Shared demo balance.</small>
+            <small>Shared balance.</small>
           </div>
         </aside>
       </div>
